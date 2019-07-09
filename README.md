@@ -4,6 +4,10 @@ Este repositorio tiene como idea crear un bot de twitter que simule el comportam
 este de "bot war". La finalidad es aprender y pasarlo bien. También la de proporcionar
 un código funcional por si alguien quiere usarlo en twitter para su propio proyecto.
 
+El esquema que he pensado es este:
+
+![esquema](./assets/esquema.png)
+
 La licencia que usaremos aún no está clara...
 
 # Ideas para el desarrollo del Bot
