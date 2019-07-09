@@ -1,0 +1,14 @@
+[
+  {
+    "user" :  "maria",
+    "estado" : "vivo",
+    "seguidores" : 123,
+    "más cosas" : "etc..."
+  },
+  {
+    "user" :  "pepe",
+    "estado" : "muerto",
+    "seguidores" : 43,
+    "más cosas" : "etc..."
+  }
+]
