@@ -46,6 +46,8 @@ Las ideas que se me han ocurrido son:
 
 * De momento no tenemos ningún canal para comunicarnos ni nada parecido, si se une más 
   gente podemos crear un grupo de telegram o similares.
+ 
+* Se puede usar la librería pillow para la imagen con los nombres...
 
 # Participa
 
