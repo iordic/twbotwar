@@ -1,37 +1,19 @@
 from PIL import Image, ImageDraw, ImageFont
-import pprint
 import json
 
-# Ejemplo simple de uso de pillow para los nombres
-usuarios = '[{"nombre":"Maria", "estado":"muerto"},\
-             {"nombre":"Pepe", "estado":"muerto"},\
-             {"nombre":"Rosa", "estado":"muerto"},\
-             {"nombre":"Juan", "estado":"muerto"},\
-             {"nombre":"Christian", "estado":"vivo"},\
-             {"nombre":"Ximo", "estado":"muerto"},\
-             {"nombre":"Inés", "estado":"vivo"},\
-             {"nombre":"Cristina", "estado":"muerto"},\
-             {"nombre":"Juanjo", "estado":"vivo"},\
-             {"nombre":"Alfonso", "estado":"vivo"},\
-             {"nombre":"Álvaro", "estado":"muerto"},\
-             {"nombre":"Estefania", "estado":"vivo"},\
-             {"nombre":"Sara", "estado":"vivo"},\
-             {"nombre":"Alberto", "estado":"vivo"},\
-             {"nombre":"Narciso", "estado":"vivo"},\
-             {"nombre":"Roxanne", "estado":"muerto"},\
-             {"nombre":"Berta", "estado":"vivo"},\
-             {"nombre":"Alicia", "estado":"vivo"},\
-             {"nombre":"Bob", "estado":"muerto"},\
-             {"nombre":"Eve", "estado":"vivo"},\
-             {"nombre":"Alba", "estado":"vivo"},\
-             {"nombre":"Jose", "estado":"muerto"}]'
+FONT_FILE = '../assets/Grundschrift-Regular.otf'
+USERS_FILE = 'usuarios.json'
+IMAGE_FILE = 'example.png'
 
-image_size = (800, 600)
+IMAGE_SIZE = (800, 600)
+FONT_SIZE = 20
+
+BACKGROUND_COLOR = (255, 237, 115)  # RGB decimal
 
 
 def generar_imagen(lista):
-    image = Image.new('RGB', image_size, color=(166, 211, 243))
-    font =  ImageFont.truetype('Grundschrift-Regular.otf', 16)
+    image = Image.new('RGB', IMAGE_SIZE, color=BACKGROUND_COLOR)
+    font =  ImageFont.truetype(FONT_FILE, FONT_SIZE)
     
     draw = ImageDraw.Draw(image)
     
@@ -40,28 +22,39 @@ def generar_imagen(lista):
 
     for i in lista:
         text_size = draw.textsize(i['nombre'], font=font)
+
+        if (pointer[1] + 10 + text_size[1]) >= IMAGE_SIZE[1]:
+            print("No caben todos los nombres, algunos se han omitido")
+            image.save(IMAGE_FILE)
+            return
+
+        if (pointer[0] + 20 + text_size[0]) >= IMAGE_SIZE[0]:
+            pointer[0] = 10
+            pointer[1] += 10 + text_size[1]
+
         if i['estado'] == "muerto":
             color = (255,0,0)
             # draw.line((x0, y0, x1, y1))
-            draw.line((pointer[0], pointer[1] + (text_size[1]/2), pointer[0] + text_size[0], pointer[1] + (text_size[1]/2)), 
-                    fill=(255,0,0), width=2)
+            draw.line((pointer[0],
+                       pointer[1] + (text_size[1]/2),
+                       pointer[0] + text_size[0],
+                       pointer[1] + (text_size[1]/2)),
+                      fill=(255,0,0), width=2)
         else:
             color = (0,0,0)
 
-        if (pointer[0] + 20 + text_size[0]) >= image_size[0]:
-            pointer[0] = 10
-            pointer[1] += 10 + text_size[1]
         draw.text(pointer, i['nombre'], font=font, fill=color)
         
         pointer[0] += 20 + text_size[0]
 
-    image.save('example.png')
-
+    image.save(IMAGE_FILE)
 
 
 if __name__ == '__main__':
-    datos = json.loads(usuarios)
+    with open(USERS_FILE) as json_file:
+        data = json_file.read()
+
+    usuarios = json.loads(data)
     # Si queremos comprobar que lo carga bien:
-    # pp = pprint.PrettyPrinter(indent=4)
-    # pp.pprint(datos)
-    generar_imagen(datos)
+    # print(json.dumps(usuarios, indent=4))
+    generar_imagen(usuarios)
