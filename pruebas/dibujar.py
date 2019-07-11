@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 import json
 
 FONT_FILE = '../assets/Grundschrift-Regular.otf'
-USERS_FILE = 'usuarios.json'
+USERS_FILE = '../data/usuarios.json'
 IMAGE_FILE = 'example.png'
 
 IMAGE_SIZE = (800, 600)

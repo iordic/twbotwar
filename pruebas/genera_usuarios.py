@@ -4,7 +4,7 @@ import json
 
 
 NAMES_FILE = 'nombres.csv'
-EXPORT_FILE = 'usuarios.json'
+EXPORT_FILE = '../data/usuarios.json'
 CANTIDAD = 200
 
 def main():
